@@ -1,46 +1,59 @@
-/*accept user input with parsefloat
-create let variables for num1 num2
-activate buttons with eventlistener
-create functions for each MDAS
-add result to the dom with innertext
-*/
+let total = 50;
+let currentBet = 0;
 
-document.querySelector('#addi').addEventListener('click', add);
-document.querySelector('#sub').addEventListener('click', subtract);
-document.querySelector('#multi').addEventListener('click', multiply);
-document.querySelector('#divi').addEventListener('click', division);
+document.getElementById('total').innerText = `Total: ${total}`;
 
-function getNumbers() {
-    const num1 = parseFloat(document.querySelector('#num1').value);
-    const num2 = parseFloat(document.querySelector('#num2').value);
-    return { num1, num2 };
-}
+// activate buttons
+document.getElementById('bet1').addEventListener('click', function() {
+    currentBet += 1;
+    document.getElementById('winLose').innerText = `Current Bet: ${currentBet}`;
+});
+document.getElementById('bet10').addEventListener('click', function() {
+    currentBet += 10;
+    document.getElementById('winLose').innerText = `Current Bet: ${currentBet}`;
+});
 
-function add() {
-    const { num1, num2 } = getNumbers();
-    let result = num1 + num2
-    document.querySelector('#result').innerText = `${num1} + ${num2}= ${result}`
-}
-
-function subtract() {
-    const { num1, num2 } = getNumbers();
-
-    let result = num1 - num2
-    document.querySelector('#result').innerText = `${num1} - ${num2}= ${result}`
-}
-function multiply() {
-    const { num1, num2 } = getNumbers();
-
-    let result = num1 * num2
-    document.querySelector('#result').innerText = `${num1} * ${num2}= ${result}`
-}
-function division() {
-    const { num1, num2 } = getNumbers();
-
-    let result = num1 / num2
-    if (num2 === 0) {
-        document.querySelector('#result').innerText = 'Error: Second Number Cannot be 0' 
-    } else {
-        document.querySelector('#result').innerText = `${num1} / ${num2}= ${result}`
+// Lever actions
+document.getElementById('lever').addEventListener('click', function() {
+    if (currentBet === 0) {
+        alert("Place a bet first!");
+        return;
     }
+    if (currentBet > total) {
+        alert("You lose. Please refresh the page.");
+        return;
+    }
+    spinReels(currentBet);
+});
+
+function spinReels(bet) {
+    let reels = document.querySelectorAll('.reel div');
+    let results = [];
+
+    for (let i = 0; i < reels.length; i++) {
+        let images = reels[i].querySelectorAll('img').length;
+        let stopAt = Math.floor(Math.random() * images);
+
+        // animation
+        reels[i].style.transition = 'none';
+        reels[i].offsetHeight; 
+        reels[i].style.transition = 'transform 2s ease-out';
+        reels[i].style.transform = `translateY(-${stopAt * 75}px)`;
+
+        results.push(stopAt);
+    }
+
+    // After spin ends
+    setTimeout(function() {
+        let win = (results[0] === results[1] && results[1] === results[2]);
+        if (win) {
+            total += bet * 2;
+            document.getElementById('winLose').innerText = `You won! +${bet * 2}`;
+        } else {
+            total -= bet;
+            document.getElementById('winLose').innerText = `You lost! -${bet}`;
+        }
+        document.getElementById('total').innerText = `Total: ${total}`;
+        currentBet = 0; // reset bet after spin
+    }, 2000);
 }
