@@ -4,17 +4,17 @@ let currentBet = 0;
 document.getElementById('total').innerText = `Total: ${total}`;
 
 // activate buttons
-document.getElementById('bet1').addEventListener('click', function() {
+document.getElementById('bet1').addEventListener('click', function () {
     currentBet += 1;
     document.getElementById('winLose').innerText = `Current Bet: ${currentBet}`;
 });
-document.getElementById('bet10').addEventListener('click', function() {
+document.getElementById('bet10').addEventListener('click', function () {
     currentBet += 10;
     document.getElementById('winLose').innerText = `Current Bet: ${currentBet}`;
 });
 
 // Lever actions
-document.getElementById('lever').addEventListener('click', function() {
+document.getElementById('lever').addEventListener('click', function () {
     if (currentBet === 0) {
         alert("Place a bet first!");
         return;
@@ -23,7 +23,7 @@ document.getElementById('lever').addEventListener('click', function() {
         alert("You lose. Please refresh the page.");
         return;
     }
-    spinReels(currentBet);
+    spinReels(currentBet); //source: chatgpt
 });
 
 function spinReels(bet) {
@@ -34,17 +34,17 @@ function spinReels(bet) {
         let images = reels[i].querySelectorAll('img').length;
         let stopAt = Math.floor(Math.random() * images);
 
-        // animation
+        // animations source: chatgpt & CodeJos(https://www.youtube.com/watch?v=boI2B4Gpp34&t=713s) & mdn
         reels[i].style.transition = 'none';
-        reels[i].offsetHeight; 
+        reels[i].offsetHeight;
         reels[i].style.transition = 'transform 2s ease-out';
         reels[i].style.transform = `translateY(-${stopAt * 75}px)`;
 
         results.push(stopAt);
     }
 
-    // After spin ends
-    setTimeout(function() {
+    // After spin ends reset bets, source: chatgpt & CodeJos(https://www.youtube.com/watch?v=boI2B4Gpp34&t=713s)
+    setTimeout(function () {
         let win = (results[0] === results[1] && results[1] === results[2]);
         if (win) {
             total += bet * 2;

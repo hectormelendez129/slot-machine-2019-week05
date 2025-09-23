@@ -68,6 +68,7 @@ main {
 
 }
 
+/* Source Chatgpt */
 .reel div {
   display: flex;
   flex-direction: column;
@@ -75,6 +76,7 @@ main {
   transition: transform 1s ease-out;
 }
 
+/* Source Chatgpt */
 @keyframes spin {
   0% {
     transform: translateY(0);
@@ -99,7 +101,7 @@ body {
   font-family: 'Creepster', cursive;
   background-image: url('../img/Holloween/background2.png');
   background-size: cover;
-  background-position: center ;
+  background-position: center;
   background-repeat: no-repeat;
 }
 
@@ -107,6 +109,7 @@ h1,
 h2 {
   color: #9c27b0;
 }
+
 h3 {
   background-color: rgb(223, 86, 44);
   border: 2px solid black;
@@ -116,10 +119,11 @@ h3 {
 
 h3:hover {
   background-color: #e64a19;
-    cursor: pointer;
+  cursor: pointer;
 
 }
-h4{
+
+h4 {
   text-align: center;
   color: white;
   background-color: rgb(0, 0, 0, .4);
